@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="لوحة تحكم الطالب - تتبع تقدمك في الكورسات المسجلة">
+  <title>منصة كورسات أونلاين | لوحة التحكم</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'Tajawal', 'Segoe UI', 'sans-serif'],
+            poppins: ['Poppins', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts - Cairo & Tajawal (Arabic) + Poppins (English) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@400;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- AOS Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <script>
+    try {
+      if (localStorage.getItem("siteLoadingShown") === "true") {
+        document.documentElement.classList.add("skip-loading");
+      }
+    } catch (e) {}
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body.page-enter { opacity: 0; }
+    body.page-loaded { opacity: 1; transition: opacity 0.4s ease; }
+    body.page-exit { opacity: 0; transition: opacity 0.28s ease; }
+    #main-navbar { transition: all 0.3s ease; will-change: transform, background; }
+    #main-navbar .nav-inner { transition: height 0.3s ease; }
+    #main-navbar.navbar-scrolled { background: rgba(255,255,255,0.65) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .dark #main-navbar.navbar-scrolled { background: rgba(17,24,39,0.75) !important; }
+    #main-navbar.navbar-scrolled .nav-inner { height: 3.5rem; }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 50%; width: 0; height: 2px; background: #4f46e5; transition: width 0.3s ease, left 0.3s ease; }
+    .nav-link:hover::after { width: 100%; left: 0; }
+    .course-image-wrapper .shimmer-overlay { position: absolute; inset: 0; z-index: 5; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%); transform: translateX(-100%); transition: transform 0.6s ease; }
+    .course-card:hover .shimmer-overlay { transform: translateX(100%); }
+    .progress-bar-fill { transition: width 0.3s ease; will-change: width; }
+    .btn-ripple { position: relative; overflow: hidden; }
+    .ripple-wave { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.45); transform: scale(0); animation: rippleAnim 0.6s ease-out; pointer-events: none; }
+    @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+    #scroll-top-btn { position: fixed; bottom: 24px; left: 24px; z-index: 40; width: 48px; height: 48px; border-radius: 14px; background: #4f46e5; color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(79,70,229,0.4); opacity: 0; visibility: hidden; transform: translateY(20px); transition: opacity 0.3s, visibility 0.3s, transform 0.3s; will-change: transform, opacity; }
+    #scroll-top-btn.scroll-top-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    #scroll-top-btn:hover { background: #4338ca; transform: translateY(-3px); }
+    #loading-screen {
+      position: fixed; inset: 0; z-index: 999999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #loading-screen.loading-screen-hide { opacity: 0; visibility: hidden; }
+    html.skip-loading #loading-screen { display: none !important; }
+    body.loading-active { overflow: hidden; }
+    .loader-spinner {
+      width: 44px; height: 44px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: #fff; border-radius: 50%;
+      animation: loaderSpin 0.8s linear infinite;
+    }
+    @keyframes loaderSpin { to { transform: rotate(360deg); } }
+    /* ===== Custom Cursor - دائرة تتبع الماوس ===== */
+    body.custom-cursor-active,
+    body.custom-cursor-active a,
+    body.custom-cursor-active button,
+    body.custom-cursor-active input,
+    body.custom-cursor-active textarea,
+    body.custom-cursor-active select,
+    body.custom-cursor-active label,
+    body.custom-cursor-active [role="button"] {
+      cursor: none;
+    }
+    #custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #4f46e5;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: width 0.25s ease, height 0.25s ease, background 0.25s ease, border 0.25s ease, opacity 0.2s ease;
+      will-change: transform, width, height;
+    }
+    .dark #custom-cursor { background: #818cf8; }
+    #custom-cursor.is-visible { opacity: 1; }
+    #custom-cursor.is-hover {
+      width: 38px;
+      height: 38px;
+      background: rgba(79, 70, 229, 0.12);
+      border: 2px solid #4f46e5;
+    }
+    .dark #custom-cursor.is-hover {
+      background: rgba(129, 140, 248, 0.15);
+      border-color: #818cf8;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      html { scroll-behavior: auto; }
+      .progress-bar-fill { transition: none; }
+    }
+  </style>
+</head>
+<body data-page="dashboard" class="page-enter font-sans bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+  <div id="loading-screen" aria-live="polite" aria-label="جاري التحميل">
+    <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-sm">
+      <i class="fas fa-graduation-cap text-white text-3xl"></i>
+    </div>
+    <h2 class="text-white text-2xl font-bold mb-2">كورسات<span class="text-indigo-200">+</span></h2>
+    <p class="text-indigo-100 text-sm mb-8">جاري تحميل المنصة...</p>
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- ========== Navbar ========== -->
+  <nav id="main-navbar" class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-gray-200/50 dark:border-gray-700/50 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="nav-inner flex items-center justify-between h-16 md:h-20">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <i class="fas fa-graduation-cap text-white text-lg"></i>
+          </div>
+          <span class="text-xl font-bold text-gray-900 dark:text-white">كورسات<span class="text-indigo-600">+</span></span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <a href="index.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">الرئيسية</a>
+          <a href="courses.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">الكورسات</a>
+          <a href="dashboard.html" class="nav-link text-indigo-600 font-semibold">لوحة التحكم</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button id="theme-toggle" aria-label="تبديل الوضع الليلي" class="btn-ripple w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-all duration-300">
+            <i id="theme-icon" class="fas fa-moon text-gray-700 dark:text-yellow-400"></i>
+          </button>
+          <button id="mobile-menu-btn" aria-label="فتح القائمة" class="md:hidden w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+            <i class="fas fa-bars text-gray-700 dark:text-gray-300"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-[60] hidden flex-col bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg">
+    <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+      <span class="text-lg font-bold text-gray-900 dark:text-white">القائمة</span>
+      <button id="mobile-menu-close" aria-label="إغلاق القائمة" class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+        <i class="fas fa-times text-gray-700 dark:text-gray-300"></i>
+      </button>
+    </div>
+    <div class="flex flex-col gap-2 p-6">
+      <a href="index.html" class="py-3 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors duration-300">الرئيسية</a>
+      <a href="courses.html" class="py-3 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors duration-300">الكورسات</a>
+      <a href="dashboard.html" class="py-3 px-4 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 font-semibold">لوحة التحكم</a>
+    </div>
+  </div>
+
+  <!-- ========== Welcome Section ========== -->
+  <header class="pt-28 pb-10 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="bg-gradient-to-l from-indigo-600 to-purple-600 rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden" data-aos="fade-up">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-48 h-48 bg-white/10 rounded-full translate-x-1/4 translate-y-1/4"></div>
+        <div class="relative z-10">
+          <p class="text-indigo-200 text-sm font-semibold mb-2">مرحباً بعودتك 👋</p>
+          <h1 class="text-3xl sm:text-4xl font-extrabold mb-3">أهلاً، <span id="student-name">محمد العتيبي</span></h1>
+          <p class="text-indigo-100 max-w-xl">تابع تقدمك في الكورسات المسجلة واستمر في رحلة التعلم لتحقيق أهدافك</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== Stats Cards ========== -->
+  <section class="px-4 pb-8">
+    <div class="max-w-7xl mx-auto">
+      <div id="dashboard-stats" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- يتم تعبئتها ديناميكياً -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Enrolled Courses ========== -->
+  <section class="py-10 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex items-center justify-between mb-10" data-aos="fade-up">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">كورساتي</h2>
+          <p class="text-gray-500 dark:text-gray-400 mt-1">الكورسات التي سجلت فيها</p>
+        </div>
+        <a href="courses.html" class="btn-ripple btn-magnetic hidden sm:inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-indigo-700 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+          <i class="fas fa-plus"></i> كورس جديد
+        </a>
+      </div>
+
+      <div id="enrolled-courses" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- يتم تعبئتها ديناميكياً -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="dashboard-empty" class="hidden text-center py-20" data-aos="fade-up">
+        <div class="w-24 h-24 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+          <i class="fas fa-book-reader text-4xl text-indigo-600"></i>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">لم تسجل في أي كورس بعد</h3>
+        <p class="text-gray-500 dark:text-gray-400 mb-6">ابدأ رحلة التعلم بالتسجيل في أحد الكورسات المتاحة</p>
+        <a href="courses.html" class="btn-ripple btn-magnetic inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+          <i class="fas fa-search"></i> تصفح الكورسات
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer class="bg-gray-900 dark:bg-black text-gray-300 pt-16 pb-8 px-4 mt-10" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
+              <i class="fas fa-graduation-cap text-white"></i>
+            </div>
+            <span class="text-xl font-bold text-white">كورسات<span class="text-indigo-400">+</span></span>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed">منصة تعليمية رائدة تهدف إلى تمكين المتعلمين العرب.</p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4">روابط سريعة</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-indigo-400 transition-colors duration-300">الرئيسية</a></li>
+            <li><a href="courses.html" class="hover:text-indigo-400 transition-colors duration-300">الكورسات</a></li>
+            <li><a href="dashboard.html" class="hover:text-indigo-400 transition-colors duration-300">لوحة التحكم</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4">التصنيفات</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="courses.html" class="hover:text-indigo-400 transition-colors duration-300">برمجة</a></li>
+            <li><a href="courses.html" class="hover:text-indigo-400 transition-colors duration-300">تصميم</a></li>
+            <li><a href="courses.html" class="hover:text-indigo-400 transition-colors duration-300">تسويق</a></li>
+            <li><a href="courses.html" class="hover:text-indigo-400 transition-colors duration-300">أعمال</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4">تواصل معنا</h4>
+          <div class="flex gap-3">
+            <a href="#" aria-label="Twitter" class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-indigo-600 transition-all duration-300"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram" class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-indigo-600 transition-all duration-300"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="YouTube" class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-indigo-600 transition-all duration-300"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="LinkedIn" class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-indigo-600 transition-all duration-300"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+          <p class="text-gray-400 text-sm mt-4"><i class="fas fa-envelope ml-1"></i> info@coursesplus.com</p>
+          <form id="newsletter-form" class="mt-4" novalidate>
+            <p class="text-white text-sm font-semibold mb-2">اشترك في نشرتنا</p>
+            <div class="flex flex-col gap-2">
+              <input type="email" id="newsletter-email" name="email" placeholder="بريدك الإلكتروني" required class="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-sm placeholder-gray-500 focus:border-indigo-500 focus:outline-none transition-colors">
+              <button type="submit" class="btn-ripple w-full px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg transition-colors">اشتراك</button>
+            </div>
+            <p id="newsletter-error" class="hidden text-red-400 text-xs mt-2" role="alert"></p>
+          </form>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+        <p>&copy; 2026 منصة كورسات+. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button id="scroll-top-btn" aria-label="العودة للأعلى" class="btn-ripple">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
