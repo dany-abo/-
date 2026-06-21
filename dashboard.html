@@ -6,6 +6,9 @@
   <meta name="description" content="لوحة تحكم الطالب - تتبع تقدمك في الكورسات المسجلة">
   <title>منصة كورسات أونلاين | لوحة التحكم</title>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234f46e5'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial, sans-serif' font-weight='bold'%3E🎓%3C/text%3E%3C/svg%3E">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -79,43 +82,67 @@
       animation: loaderSpin 0.8s linear infinite;
     }
     @keyframes loaderSpin { to { transform: rotate(360deg); } }
-    /* ===== Custom Cursor - دائرة تتبع الماوس ===== */
-    body.custom-cursor-active,
-    body.custom-cursor-active a,
-    body.custom-cursor-active button,
-    body.custom-cursor-active input,
-    body.custom-cursor-active textarea,
-    body.custom-cursor-active select,
-    body.custom-cursor-active label,
-    body.custom-cursor-active [role="button"] {
-      cursor: none;
-    }
+    
+    /* ===== Custom Cursor - إخفاء المؤشر الافتراضي تماماً ===== */
+    * { cursor: none !important; }
+    
+    /* الدائرة الخارجية المخصصة */
     #custom-cursor {
       position: fixed;
       top: 0;
       left: 0;
-      width: 10px;
-      height: 10px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: #4f46e5;
+      border: 2px solid #4f46e5;
+      background: rgba(79, 70, 229, 0.1);
       pointer-events: none;
       z-index: 99999;
       transform: translate(-50%, -50%);
       opacity: 0;
-      transition: width 0.25s ease, height 0.25s ease, background 0.25s ease, border 0.25s ease, opacity 0.2s ease;
+      transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, opacity 0.2s ease, border-color 0.3s ease;
       will-change: transform, width, height;
     }
-    .dark #custom-cursor { background: #818cf8; }
+    .dark #custom-cursor { border-color: #818cf8; background: rgba(129, 140, 248, 0.1); }
     #custom-cursor.is-visible { opacity: 1; }
+    
+    /* عند المرور على الأزرار والروابط - تكبير إلى 50px */
     #custom-cursor.is-hover {
-      width: 38px;
-      height: 38px;
-      background: rgba(79, 70, 229, 0.12);
+      width: 32px;
+      height: 32px;
+      background: rgba(79, 70, 229, 0.05);
       border: 2px solid #4f46e5;
     }
-    .dark #custom-cursor.is-hover {
-      background: rgba(129, 140, 248, 0.15);
-      border-color: #818cf8;
+    .dark #custom-cursor.is-hover { background: rgba(129, 140, 248, 0.08); border-color: #818cf8; }
+    
+    /* النقطة الصغيرة في المنتصف */
+    #custom-cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4f46e5;
+      pointer-events: none;
+      z-index: 100000;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .dark #custom-cursor-dot { background: #818cf8; }
+    #custom-cursor-dot.is-visible { opacity: 1; }
+    
+    /* إخفاء على الموبايل */
+    @media (max-width: 768px) {
+      #custom-cursor, #custom-cursor-dot { display: none !important; }
+      * { cursor: auto !important; }
+    }
+    
+    /* إخفاء على شاشات اللمس */
+    @media (pointer: coarse) {
+      #custom-cursor, #custom-cursor-dot { display: none !important; }
+      * { cursor: auto !important; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -137,27 +164,29 @@
 
   <!-- ========== Navbar ========== -->
   <nav id="main-navbar" class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-gray-200/50 dark:border-gray-700/50 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="nav-inner flex items-center justify-between h-16 md:h-20">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <div class="nav-inner flex items-center justify-between h-14 md:h-20">
         <a href="index.html" class="flex items-center gap-2 group">
-          <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-            <i class="fas fa-graduation-cap text-white text-lg"></i>
+          <div class="w-8 h-8 md:w-10 md:h-10 bg-indigo-600 rounded-lg md:rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <i class="fas fa-graduation-cap text-white text-base md:text-lg"></i>
           </div>
-          <span class="text-xl font-bold text-gray-900 dark:text-white">كورسات<span class="text-indigo-600">+</span></span>
+          <span class="text-lg md:text-xl font-bold text-gray-900 dark:text-white">كورسات<span class="text-indigo-600">+</span></span>
         </a>
 
-        <div class="hidden md:flex items-center gap-8">
+        <div class="hidden md:flex items-center gap-6">
           <a href="index.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">الرئيسية</a>
           <a href="courses.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">الكورسات</a>
+          <a href="course-details.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">تفاصيل الكورس</a>
           <a href="dashboard.html" class="nav-link text-indigo-600 font-semibold">لوحة التحكم</a>
+          <a href="login.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">تسجيل الدخول</a>
         </div>
 
-        <div class="flex items-center gap-3">
-          <button id="theme-toggle" aria-label="تبديل الوضع الليلي" class="btn-ripple w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-all duration-300">
-            <i id="theme-icon" class="fas fa-moon text-gray-700 dark:text-yellow-400"></i>
+        <div class="flex items-center gap-2 md:gap-3">
+          <button id="theme-toggle" aria-label="تبديل الوضع الليلي" class="btn-ripple w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-all duration-300">
+            <i id="theme-icon" class="fas fa-moon text-sm md:text-base text-gray-700 dark:text-yellow-400"></i>
           </button>
-          <button id="mobile-menu-btn" aria-label="فتح القائمة" class="md:hidden w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-            <i class="fas fa-bars text-gray-700 dark:text-gray-300"></i>
+          <button id="mobile-menu-btn" aria-label="فتح القائمة" class="md:hidden w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-all duration-300">
+            <i class="fas fa-bars text-sm text-gray-700 dark:text-gray-300"></i>
           </button>
         </div>
       </div>
@@ -165,18 +194,30 @@
   </nav>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="fixed inset-0 z-[60] hidden flex-col bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg">
+  <div id="mobile-menu" class="fixed inset-0 z-[60] hidden bg-white dark:bg-gray-900 md:hidden">
     <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
       <span class="text-lg font-bold text-gray-900 dark:text-white">القائمة</span>
-      <button id="mobile-menu-close" aria-label="إغلاق القائمة" class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-        <i class="fas fa-times text-gray-700 dark:text-gray-300"></i>
+      <button id="mobile-menu-close" aria-label="إغلاق القائمة" class="w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-300">
+        <i class="fas fa-times text-sm text-gray-700 dark:text-gray-300"></i>
       </button>
     </div>
-    <div class="flex flex-col gap-2 p-6">
-      <a href="index.html" class="py-3 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors duration-300">الرئيسية</a>
-      <a href="courses.html" class="py-3 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors duration-300">الكورسات</a>
-      <a href="dashboard.html" class="py-3 px-4 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 font-semibold">لوحة التحكم</a>
-    </div>
+    <nav class="flex flex-col gap-2 p-4">
+      <a href="index.html" class="py-3 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors duration-300 text-center">
+        <i class="fas fa-home ml-2"></i>الرئيسية
+      </a>
+      <a href="courses.html" class="py-3 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors duration-300 text-center">
+        <i class="fas fa-book ml-2"></i>الكورسات
+      </a>
+      <a href="course-details.html" class="py-3 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors duration-300 text-center">
+        <i class="fas fa-info-circle ml-2"></i>تفاصيل الكورس
+      </a>
+      <a href="dashboard.html" class="py-3 px-4 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 font-semibold text-center">
+        <i class="fas fa-chart-bar ml-2"></i>لوحة التحكم
+      </a>
+      <a href="login.html" class="py-3 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors duration-300 text-center">
+        <i class="fas fa-sign-in-alt ml-2"></i>تسجيل الدخول
+      </a>
+    </nav>
   </div>
 
   <!-- ========== Welcome Section ========== -->
@@ -297,6 +338,7 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/custom-cursor-final.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

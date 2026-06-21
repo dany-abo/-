@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="الصفحة غير موجودة - منصة كورسات أونلاين">
+  <title>404 - الصفحة غير موجودة | منصة كورسات+</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'Tajawal', 'Segoe UI', 'sans-serif'],
+            poppins: ['Poppins', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234f46e5'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial, sans-serif' font-weight='bold'%3E🎓%3C/text%3E%3C/svg%3E">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@400;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Animated Background Shapes */
+    .bg-shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 20s ease-in-out infinite;
+    }
+    .shape-1 {
+      width: 300px;
+      height: 300px;
+      background: white;
+      top: 10%;
+      right: 15%;
+      animation-delay: 0s;
+    }
+    .shape-2 {
+      width: 200px;
+      height: 200px;
+      background: white;
+      bottom: 15%;
+      left: 10%;
+      animation-delay: 5s;
+    }
+    .shape-3 {
+      width: 150px;
+      height: 150px;
+      background: white;
+      top: 60%;
+      right: 5%;
+      animation-delay: 10s;
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      33% {
+        transform: translate(30px, -50px) scale(1.1);
+      }
+      66% {
+        transform: translate(-20px, 30px) scale(0.9);
+      }
+    }
+    
+    /* Glitch Effect for 404 */
+    .glitch {
+      position: relative;
+      font-size: 8rem;
+      font-weight: 900;
+      line-height: 1;
+      color: white;
+      letter-spacing: -0.05em;
+      animation: glitch 1s linear infinite;
+    }
+    
+    @keyframes glitch {
+      2%, 64% {
+        transform: translate(2px, 0) skew(0deg);
+      }
+      4%, 60% {
+        transform: translate(-2px, 0) skew(0deg);
+      }
+      62% {
+        transform: translate(0, 0) skew(5deg);
+      }
+    }
+    
+    .glitch:before,
+    .glitch:after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .glitch:before {
+      left: 2px;
+      text-shadow: -2px 0 #ff00c1;
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim 5s infinite linear alternate-reverse;
+    }
+    
+    .glitch:after {
+      left: -2px;
+      text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim2 5s infinite linear alternate-reverse;
+    }
+    
+    @keyframes glitch-anim {
+      0% { clip: rect(61px, 9999px, 89px, 0); }
+      20% { clip: rect(33px, 9999px, 19px, 0); }
+      40% { clip: rect(98px, 9999px, 35px, 0); }
+      60% { clip: rect(17px, 9999px, 100px, 0); }
+      80% { clip: rect(53px, 9999px, 72px, 0); }
+      100% { clip: rect(26px, 9999px, 58px, 0); }
+    }
+    
+    @keyframes glitch-anim2 {
+      0% { clip: rect(65px, 9999px, 99px, 0); }
+      20% { clip: rect(14px, 9999px, 53px, 0); }
+      40% { clip: rect(81px, 9999px, 27px, 0); }
+      60% { clip: rect(43px, 9999px, 95px, 0); }
+      80% { clip: rect(22px, 9999px, 69px, 0); }
+      100% { clip: rect(90px, 9999px, 38px, 0); }
+    }
+    
+    /* Glass Card */
+    .glass-card {
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+    
+    .dark .glass-card {
+      background: rgba(17, 24, 39, 0.95);
+    }
+    
+    /* Floating Animation */
+    .floating {
+      animation: floating-gentle 3s ease-in-out infinite;
+    }
+    
+    @keyframes floating-gentle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    /* Custom Cursor */
+    * { cursor: none !important; }
+    
+    #custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid white;
+      background: rgba(255, 255, 255, 0.2);
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, opacity 0.2s ease;
+      will-change: transform, width, height;
+    }
+    
+    #custom-cursor.is-visible { opacity: 1; }
+    
+    #custom-cursor.is-hover {
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid white;
+    }
+    
+    @media (max-width: 768px) {
+      #custom-cursor { display: none !important; }
+      * { cursor: auto !important; }
+      .glitch { font-size: 5rem; }
+    }
+    
+    @media (pointer: coarse) {
+      #custom-cursor { display: none !important; }
+      * { cursor: auto !important; }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800 dark:text-gray-200">
+
+  <!-- Animated Background Shapes -->
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+  <div class="bg-shape shape-3"></div>
+
+  <!-- Main Content -->
+  <div class="relative z-10 text-center px-4 max-w-2xl mx-auto">
+    
+    <!-- Logo -->
+    <div class="mb-8 floating">
+      <a href="index.html" class="inline-flex items-center justify-center gap-3 group">
+        <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
+          <i class="fas fa-graduation-cap text-indigo-600 text-3xl"></i>
+        </div>
+        <span class="text-3xl font-extrabold text-white drop-shadow-lg">كورسات<span class="text-yellow-300">+</span></span>
+      </a>
+    </div>
+
+    <!-- 404 Glitch Text -->
+    <h1 class="glitch mb-8" data-text="404">404</h1>
+
+    <!-- Error Message Card -->
+    <div class="glass-card rounded-3xl p-8 sm:p-12 shadow-2xl mb-8">
+      <div class="w-24 h-24 bg-gradient-to-br from-red-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6">
+        <i class="fas fa-exclamation-triangle text-white text-4xl"></i>
+      </div>
+      
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
+        عذراً! الصفحة غير موجودة 🤔
+      </h2>
+      
+      <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+        الصفحة التي تبحث عنها قد تكون قد تم نقلها أو حذفها أو ربما لم تكن موجودة من الأساس.
+        لا تقلق، يمكنك العودة للصفحة الرئيسية أو تصفح الكورسات المتاحة.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="index.html" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:from-indigo-700 hover:to-purple-700 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+          <i class="fas fa-home"></i>
+          الصفحة الرئيسية
+        </a>
+        
+        <a href="courses.html" class="inline-flex items-center justify-center gap-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-white px-8 py-4 rounded-2xl font-bold text-lg border-2 border-white dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+          <i class="fas fa-book"></i>
+          تصفح الكورسات
+        </a>
+      </div>
+    </div>
+
+    <!-- Additional Links -->
+    <div class="flex flex-wrap justify-center gap-6 text-white/90">
+      <a href="dashboard.html" class="hover:text-white transition-colors">
+        <i class="fas fa-chart-bar ml-1"></i>
+        لوحة التحكم
+      </a>
+      <a href="login.html" class="hover:text-white transition-colors">
+        <i class="fas fa-sign-in-alt ml-1"></i>
+        تسجيل الدخول
+      </a>
+      <a href="index.html#contact" class="hover:text-white transition-colors">
+        <i class="fas fa-envelope ml-1"></i>
+        اتصل بنا
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Custom Cursor -->
+  <div id="custom-cursor" aria-hidden="true"></div>
+
+  <!-- Scripts -->
+  <script>
+    // تطبيق Dark Mode
+    const isDark = localStorage.getItem('darkMode') === 'true';
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Custom Cursor
+    function initCustomCursor() {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (!window.matchMedia("(pointer: fine)").matches) return;
+
+      const cursor = document.getElementById('custom-cursor');
+      const HOVER_SELECTOR = "a, button";
+
+      let mouseX = 0;
+      let mouseY = 0;
+      let cursorX = 0;
+      let cursorY = 0;
+
+      document.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.classList.add("is-visible");
+        cursor.classList.toggle("is-hover", !!e.target.closest(HOVER_SELECTOR));
+      });
+
+      document.addEventListener("mouseleave", () => {
+        cursor.classList.remove("is-visible", "is-hover");
+      });
+
+      function followMouse() {
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+        cursor.style.left = `${cursorX}px`;
+        cursor.style.top = `${cursorY}px`;
+        requestAnimationFrame(followMouse);
+      }
+
+      followMouse();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      initCustomCursor();
+    });
+  </script>
+</body>
+</html>

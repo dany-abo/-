@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="تفاصيل الكورس - منصة كورسات أونلاين">
+  <title>منصة كورسات أونلاين | تفاصيل الكورس</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234f46e5'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial, sans-serif' font-weight='bold'%3E🎓%3C/text%3E%3C/svg%3E">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'Tajawal', 'Segoe UI', 'sans-serif'],
+            poppins: ['Poppins', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@400;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- AOS Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <script>
+    try {
+      if (localStorage.getItem("siteLoadingShown") === "true") {
+        document.documentElement.classList.add("skip-loading");
+      }
+    } catch (e) {}
+  </script>
+
+  <style>
+    
+    html { scroll-behavior: smooth; }
+    body.page-enter { opacity: 0; }
+    body.page-loaded { opacity: 1; transition: opacity 0.4s ease; }
+    body.page-exit { opacity: 0; transition: opacity 0.28s ease; }
+    #main-navbar { transition: all 0.3s ease; }
+    #main-navbar .nav-inner { transition: height 0.3s ease; }
+    #main-navbar.navbar-scrolled { background: rgba(255,255,255,0.65) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .dark #main-navbar.navbar-scrolled { background: rgba(17,24,39,0.75) !important; }
+    #main-navbar.navbar-scrolled .nav-inner { height: 3.5rem; }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 50%; width: 0; height: 2px; background: #4f46e5; transition: width 0.3s ease, left 0.3s ease; }
+    .nav-link:hover::after { width: 100%; left: 0; }
+    .btn-ripple { position: relative; overflow: hidden; }
+    .ripple-wave { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.45); transform: scale(0); animation: rippleAnim 0.6s ease-out; pointer-events: none; }
+    @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+    #scroll-top-btn { position: fixed; bottom: 24px; left: 24px; z-index: 40; width: 48px; height: 48px; border-radius: 14px; background: #4f46e5; color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(79,70,229,0.4); opacity: 0; visibility: hidden; transform: translateY(20px); transition: opacity 0.3s, visibility 0.3s, transform 0.3s; }
+    #scroll-top-btn.scroll-top-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    #scroll-top-btn:hover { background: #4338ca; transform: translateY(-3px); }
+    #loading-screen { position: fixed; inset: 0; z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #4f46e5, #7c3aed); transition: opacity 0.6s ease, visibility 0.6s ease; }
+    #loading-screen.loading-screen-hide { opacity: 0; visibility: hidden; }
+    html.skip-loading #loading-screen { display: none !important; }
+    body.loading-active { overflow: hidden; }
+    .loader-spinner { width: 44px; height: 44px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: loaderSpin 0.8s linear infinite; }
+    @keyframes loaderSpin { to { transform: rotate(360deg); } }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .accordion-content.open { max-height: 500px; }
+    
+    /* ===== Custom Cursor - إخفاء المؤشر الافتراضي تماماً ===== */
+    * { cursor: none !important; }
+    
+    /* الدائرة الخارجية المخصصة */
+    #custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid #4f46e5;
+      background: rgba(79, 70, 229, 0.1);
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, opacity 0.2s ease, border-color 0.3s ease;
+      will-change: transform, width, height;
+    }
+    .dark #custom-cursor { border-color: #818cf8; background: rgba(129, 140, 248, 0.1); }
+    #custom-cursor.is-visible { opacity: 1; }
+    
+    /* عند المرور على الأزرار والروابط - تكبير إلى 32px */
+    #custom-cursor.is-hover {
+      width: 32px;
+      height: 32px;
+      background: rgba(79, 70, 229, 0.05);
+      border: 2px solid #4f46e5;
+    }
+    .dark #custom-cursor.is-hover { background: rgba(129, 140, 248, 0.08); border-color: #818cf8; }
+    
+    /* إخفاء على الموبايل */
+    @media (max-width: 768px) {
+      #custom-cursor { display: none !important; }
+      * { cursor: auto !important; }
+    }
+    
+    /* إخفاء على شاشات اللمس */
+    @media (pointer: coarse) {
+      #custom-cursor { display: none !important; }
+      * { cursor: auto !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body data-page="course-details" class="page-enter font-sans bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+  <div id="loading-screen" aria-live="polite" aria-label="جاري التحميل">
+    <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-sm">
+      <i class="fas fa-graduation-cap text-white text-3xl"></i>
+    </div>
+    <h2 class="text-white text-2xl font-bold mb-2">كورسات<span class="text-indigo-200">+</span></h2>
+    <p class="text-indigo-100 text-sm mb-8">جاري تحميل المنصة...</p>
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- ========== Navbar ========== -->
+  <nav id="main-navbar" class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-gray-200/50 dark:border-gray-700/50 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <div class="nav-inner flex items-center justify-between h-14 md:h-20">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <div class="w-8 h-8 md:w-10 md:h-10 bg-indigo-600 rounded-lg md:rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <i class="fas fa-graduation-cap text-white text-base md:text-lg"></i>
+          </div>
+          <span class="text-lg md:text-xl font-bold text-gray-900 dark:text-white">كورسات<span class="text-indigo-600">+</span></span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-6">
+          <a href="index.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">الرئيسية</a>
+          <a href="courses.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">الكورسات</a>
+          <a href="course-details.html" class="nav-link text-indigo-600 font-semibold">تفاصيل الكورس</a>
+          <a href="dashboard.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">لوحة التحكم</a>
+          <a href="login.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">تسجيل الدخول</a>
+        </div>
+
+        <div class="flex items-center gap-2 md:gap-3">
+          <button id="theme-toggle" aria-label="تبديل الوضع الليلي" class="btn-ripple w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-all duration-300">
+            <i id="theme-icon" class="fas fa-moon text-sm md:text-base text-gray-700 dark:text-yellow-400"></i>
+          </button>
+          <button id="mobile-menu-btn" aria-label="فتح القائمة" class="md:hidden w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-all duration-300">
+            <i class="fas fa-bars text-sm text-gray-700 dark:text-gray-300"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-[60] hidden bg-white dark:bg-gray-900 md:hidden">
+    <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+      <span class="text-lg font-bold text-gray-900 dark:text-white">القائمة</span>
+      <button id="mobile-menu-close" aria-label="إغلاق القائمة" class="w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-300">
+        <i class="fas fa-times text-sm text-gray-700 dark:text-gray-300"></i>
+      </button>
+    </div>
+    <nav class="flex flex-col gap-2 p-4">
+      <a href="index.html" class="py-3 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors duration-300 text-center"><i class="fas fa-home ml-2"></i>الرئيسية</a>
+      <a href="courses.html" class="py-3 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors duration-300 text-center"><i class="fas fa-book ml-2"></i>الكورسات</a>
+      <a href="dashboard.html" class="py-3 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors duration-300 text-center"><i class="fas fa-chart-bar ml-2"></i>لوحة التحكم</a>
+      <a href="login.html" class="py-3 px-4 rounded-xl bg-indigo-600 text-white font-semibold text-center hover:bg-indigo-700 transition-colors duration-300 mt-2">
+        <i class="fas fa-sign-in-alt ml-2"></i>تسجيل الدخول
+      </a>
+    </nav>
+  </div>
+
+  <!-- ========== Main Content ========== -->
+  <main class="pt-24 pb-16 px-4">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- قسم عودة -->
+      <a href="courses.html" class="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:gap-3 transition-all duration-300 mb-8" data-aos="fade-up">
+        <i class="fas fa-arrow-right"></i>
+        <span>العودة للكورسات</span>
+      </a>
+
+      <!-- إذا لم يتم تحديد كورس، عرض قائمة الكورسات -->
+      <div id="courses-list-section" class="hidden">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white mb-4">
+            اختر كورساً لعرض التفاصيل
+          </h1>
+          <p class="text-gray-600 dark:text-gray-400 text-lg">اضغط على أي كورس لعرض التفاصيل الكاملة</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" id="all-courses-grid">
+          <!-- سيتم ملؤها بـ JavaScript -->
+        </div>
+      </div>
+
+      <!-- تفاصيل الكورس المحدد -->
+      <div id="course-details-section">
+        <div class="grid lg:grid-cols-3 gap-10">
+        
+        <!-- القسم الأيسر - التفاصيل -->
+        <div class="lg:col-span-2 space-y-8">
+          
+          <!-- صورة الكورس والعنوان -->
+          <div data-aos="fade-up">
+            <div class="bg-indigo-50 dark:bg-indigo-900/20 px-4 py-2 rounded-full inline-block mb-4">
+              <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm" id="course-category">برمجة</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white mb-6" id="course-title">
+              تعلم JavaScript من الصفر
+            </h1>
+            <img id="course-image" src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=1200&q=80" alt="صورة الكورس" class="w-full rounded-3xl shadow-2xl mb-6 object-cover aspect-video">
+          </div>
+
+          <!-- ماذا ستتعلم -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+              <i class="fas fa-lightbulb text-yellow-500"></i>
+              ماذا ستتعلم
+            </h2>
+            <ul class="space-y-3" id="what-you-learn">
+              <li class="flex items-start gap-3">
+                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                <span class="text-gray-700 dark:text-gray-300">فهم أساسيات البرمجة بلغة JavaScript الحديثة</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                <span class="text-gray-700 dark:text-gray-300">بناء تطبيقات ويب تفاعلية من الصفر</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                <span class="text-gray-700 dark:text-gray-300">التعامل مع DOM و Events بكفاءة</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                <span class="text-gray-700 dark:text-gray-300">استخدام ES6+ والميزات الحديثة</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                <span class="text-gray-700 dark:text-gray-300">بناء مشاريع عملية احترافية</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- محتوى الكورس - Accordion -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+              <i class="fas fa-list-ul text-indigo-600"></i>
+              محتوى الكورس
+            </h2>
+            <div class="space-y-3">
+              <!-- Module 1 -->
+              <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                <button onclick="toggleAccordion(1)" class="w-full px-6 py-4 bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <i class="fas fa-book text-indigo-600"></i>
+                    <span class="font-bold text-gray-900 dark:text-white">الوحدة 1: مقدمة في JavaScript</span>
+                  </div>
+                  <i id="icon-1" class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                </button>
+                <div id="content-1" class="accordion-content bg-white dark:bg-gray-800 px-6">
+                  <ul class="py-4 space-y-2 text-gray-600 dark:text-gray-400">
+                    <li class="flex items-center gap-2"><i class="fas fa-play-circle text-indigo-600 text-sm"></i> ما هي JavaScript؟ (8 دقائق)</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-play-circle text-indigo-600 text-sm"></i> إعداد بيئة العمل (12 دقيقة)</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-play-circle text-indigo-600 text-sm"></i> أول برنامج لك (10 دقائق)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Module 2 -->
+              <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                <button onclick="toggleAccordion(2)" class="w-full px-6 py-4 bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <i class="fas fa-book text-indigo-600"></i>
+                    <span class="font-bold text-gray-900 dark:text-white">الوحدة 2: المتغيرات والأنواع</span>
+                  </div>
+                  <i id="icon-2" class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                </button>
+                <div id="content-2" class="accordion-content bg-white dark:bg-gray-800 px-6">
+                  <ul class="py-4 space-y-2 text-gray-600 dark:text-gray-400">
+                    <li class="flex items-center gap-2"><i class="fas fa-play-circle text-indigo-600 text-sm"></i> let, const, var (15 دقيقة)</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-play-circle text-indigo-600 text-sm"></i> أنواع البيانات (18 دقيقة)</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-play-circle text-indigo-600 text-sm"></i> العمليات الحسابية (12 دقيقة)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Module 3 -->
+              <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                <button onclick="toggleAccordion(3)" class="w-full px-6 py-4 bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <i class="fas fa-book text-indigo-600"></i>
+                    <span class="font-bold text-gray-900 dark:text-white">الوحدة 3: الدوال والشروط</span>
+                  </div>
+                  <i id="icon-3" class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                </button>
+                <div id="content-3" class="accordion-content bg-white dark:bg-gray-800 px-6">
+                  <ul class="py-4 space-y-2 text-gray-600 dark:text-gray-400">
+                    <li class="flex items-center gap-2"><i class="fas fa-play-circle text-indigo-600 text-sm"></i> كتابة الدوال (20 دقيقة)</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-play-circle text-indigo-600 text-sm"></i> الشروط if/else (16 دقيقة)</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-play-circle text-indigo-600 text-sm"></i> الحلقات Loops (22 دقيقة)</li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- عن المدرب -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+              <i class="fas fa-user-tie text-purple-600"></i>
+              عن المدرب
+            </h2>
+            <div class="flex items-center gap-6 mb-4">
+              <img id="instructor-avatar" src="https://i.pravatar.cc/150?img=12" alt="صورة المدرب" class="w-20 h-20 rounded-full border-4 border-indigo-100 dark:border-indigo-900">
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white" id="instructor-name">أحمد محمد</h3>
+                <p class="text-gray-500 dark:text-gray-400">مطور Full Stack</p>
+                <div class="flex items-center gap-2 mt-2">
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <span class="text-sm text-gray-600 dark:text-gray-400">تقييم 4.9 من 5</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+              مطور ويب محترف مع أكثر من 8 سنوات خبرة في تطوير التطبيقات. 
+              قام بتدريب أكثر من 10,000 طالب عبر منصات التعليم الإلكتروني المختلفة. 
+              متخصص في JavaScript و React و Node.js، ولديه شغف كبير بتبسيط البرمجة للمبتدئين.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- القسم الأيمن - بطاقة التسجيل الثابتة -->
+        <div class="lg:col-span-1">
+          <div class="sticky top-24 bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-2xl border border-gray-200 dark:border-gray-700" data-aos="fade-up">
+            
+            <!-- السعر -->
+            <div class="mb-6 text-center">
+              <span class="text-5xl font-extrabold text-indigo-600 dark:text-indigo-400" id="course-price">299</span>
+              <span class="text-gray-500 dark:text-gray-400 text-lg mr-2">ر.س</span>
+            </div>
+
+            <!-- التقييم -->
+            <div class="flex items-center justify-center gap-2 mb-6">
+              <div class="flex text-yellow-400 text-lg" id="course-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span class="text-gray-600 dark:text-gray-400 font-semibold" id="course-rating">4.8</span>
+              <span class="text-gray-400 text-sm">(320 تقييم)</span>
+            </div>
+
+            <!-- زر الاشتراك -->
+            <button id="enroll-btn" onclick="enrollFromDetails()" class="btn-ripple w-full py-4 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 mb-6">
+              <i class="fas fa-shopping-cart ml-2"></i>
+              اشترك الآن
+            </button>
+
+            <!-- معلومات إضافية -->
+            <div class="space-y-3 border-t border-gray-200 dark:border-gray-700 pt-6">
+              <div class="flex items-center justify-between">
+                <span class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                  <i class="fas fa-clock text-indigo-600"></i>
+                  المدة
+                </span>
+                <span class="font-bold text-gray-900 dark:text-white">8 ساعات</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                  <i class="fas fa-play text-indigo-600"></i>
+                  الدروس
+                </span>
+                <span class="font-bold text-gray-900 dark:text-white">45 درس</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                  <i class="fas fa-signal text-indigo-600"></i>
+                  المستوى
+                </span>
+                <span class="font-bold text-gray-900 dark:text-white">مبتدئ</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                  <i class="fas fa-certificate text-indigo-600"></i>
+                  الشهادة
+                </span>
+                <span class="font-bold text-gray-900 dark:text-white">متاحة</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                  <i class="fas fa-infinity text-indigo-600"></i>
+                  الوصول
+                </span>
+                <span class="font-bold text-gray-900 dark:text-white">مدى الحياة</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- نهاية course-details-section -->
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========== Footer ========== -->
+  <footer class="bg-gray-900 dark:bg-black text-gray-300 pt-16 pb-8 px-4" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
+              <i class="fas fa-graduation-cap text-white"></i>
+            </div>
+            <span class="text-xl font-bold text-white">كورسات<span class="text-indigo-400">+</span></span>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed">منصة تعليمية رائدة تهدف إلى تمكين المتعلمين العرب.</p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4">روابط سريعة</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-indigo-400 transition-colors duration-300">الرئيسية</a></li>
+            <li><a href="courses.html" class="hover:text-indigo-400 transition-colors duration-300">الكورسات</a></li>
+            <li><a href="dashboard.html" class="hover:text-indigo-400 transition-colors duration-300">لوحة التحكم</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4">التصنيفات</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="courses.html" class="hover:text-indigo-400 transition-colors duration-300">برمجة</a></li>
+            <li><a href="courses.html" class="hover:text-indigo-400 transition-colors duration-300">تصميم</a></li>
+            <li><a href="courses.html" class="hover:text-indigo-400 transition-colors duration-300">تسويق</a></li>
+            <li><a href="courses.html" class="hover:text-indigo-400 transition-colors duration-300">أعمال</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4">تواصل معنا</h4>
+          <div class="flex gap-3">
+            <a href="#" aria-label="Twitter" class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-indigo-600 transition-all duration-300"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram" class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-indigo-600 transition-all duration-300"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="YouTube" class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-indigo-600 transition-all duration-300"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="LinkedIn" class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-indigo-600 transition-all duration-300"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+          <p class="text-gray-400 text-sm mt-4"><i class="fas fa-envelope ml-1"></i> info@coursesplus.com</p>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+        <p>&copy; 2026 منصة كورسات+. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button id="scroll-top-btn" aria-label="العودة للأعلى" class="btn-ripple">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/custom-cursor-final.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // وظيفة التسجيل في الكورس
+    function enrollFromDetails() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseId = parseInt(urlParams.get('id')) || 1;
+      enrollCourse(courseId);
+      
+      // تحديث زر الاشتراك
+      const btn = document.getElementById('enroll-btn');
+      btn.textContent = 'مسجل ✓';
+      btn.disabled = true;
+      btn.classList.add('bg-green-600', 'cursor-not-allowed', 'opacity-80');
+      btn.classList.remove('hover:bg-indigo-700');
+    }
+
+    // وظيفة فتح وإغلاق الأكورديون
+    function toggleAccordion(id) {
+      const content = document.getElementById(`content-${id}`);
+      const icon = document.getElementById(`icon-${id}`);
+      
+      if (content.classList.contains('open')) {
+        content.classList.remove('open');
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      } else {
+        // إغلاق جميع الأكورديونات الأخرى
+        document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('open'));
+        document.querySelectorAll('[id^="icon-"]').forEach(i => {
+          i.classList.remove('fa-chevron-up');
+          i.classList.add('fa-chevron-down');
+        });
+        
+        // فتح المحدد
+        content.classList.add('open');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      }
+    }
+
+    // تحميل بيانات الكورس من URL
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseId = parseInt(urlParams.get('id')) || 1;
+      const course = coursesData.find(c => c.id === courseId);
+      
+      if (course) {
+        document.getElementById('course-title').textContent = course.title;
+        document.getElementById('course-category').textContent = course.category;
+        document.getElementById('course-image').src = course.image;
+        document.getElementById('course-price').textContent = course.price;
+        document.getElementById('course-rating').textContent = course.rating;
+        document.getElementById('instructor-name').textContent = course.instructor;
+        
+        // تحديث النجوم
+        const stars = generateStars(course.rating);
+        document.getElementById('course-stars').innerHTML = stars;
+        
+        // التحقق من التسجيل
+        if (isEnrolled(courseId)) {
+          const btn = document.getElementById('enroll-btn');
+          btn.textContent = 'مسجل ✓';
+          btn.disabled = true;
+          btn.classList.add('bg-green-600', 'cursor-not-allowed', 'opacity-80');
+          btn.classList.remove('hover:bg-indigo-700');
+        }
+      }
+    });
+  </script>
+  
+</body>
+</html>

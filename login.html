@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="تسجيل الدخول - منصة كورسات أونلاين">
+  <title>منصة كورسات أونلاين | تسجيل الدخول</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234f46e5'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial, sans-serif' font-weight='bold'%3E🎓%3C/text%3E%3C/svg%3E">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'Tajawal', 'Segoe UI', 'sans-serif'],
+            poppins: ['Poppins', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@400;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .login-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .login-bg::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: moveGrid 20s linear infinite;
+    }
+    @keyframes moveGrid {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+    .glass-card {
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+    .dark .glass-card {
+      background: rgba(17, 24, 39, 0.95);
+    }
+    .input-icon {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+    }
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+    @keyframes floating {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    
+    /* ===== Custom Cursor - إخفاء المؤشر الافتراضي تماماً ===== */
+    * { cursor: none !important; }
+    
+    /* الدائرة الخارجية المخصصة */
+    #custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid #4f46e5;
+      background: rgba(79, 70, 229, 0.1);
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, opacity 0.2s ease, border-color 0.3s ease;
+      will-change: transform, width, height;
+    }
+    .dark #custom-cursor { border-color: #818cf8; background: rgba(129, 140, 248, 0.1); }
+    #custom-cursor.is-visible { opacity: 1; }
+    
+    /* عند المرور على الأزرار والروابط - تكبير إلى 50px */
+    #custom-cursor.is-hover {
+      width: 32px;
+      height: 32px;
+      background: rgba(79, 70, 229, 0.05);
+      border: 2px solid #4f46e5;
+    }
+    .dark #custom-cursor.is-hover { background: rgba(129, 140, 248, 0.08); border-color: #818cf8; }
+    
+    /* النقطة الصغيرة في المنتصف */
+    #custom-cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4f46e5;
+      pointer-events: none;
+      z-index: 100000;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .dark #custom-cursor-dot { background: #818cf8; }
+    #custom-cursor-dot.is-visible { opacity: 1; }
+    
+    /* إخفاء على الموبايل */
+    @media (max-width: 768px) {
+      #custom-cursor, #custom-cursor-dot { display: none !important; }
+      * { cursor: auto !important; }
+    }
+    
+    /* إخفاء على شاشات اللمس */
+    @media (pointer: coarse) {
+      #custom-cursor, #custom-cursor-dot { display: none !important; }
+      * { cursor: auto !important; }
+    }
+  </style>
+</head>
+<body class="login-bg font-sans text-gray-800 dark:text-gray-200">
+
+  <div class="w-full max-w-md mx-4 relative z-10">
+    
+    <!-- شعار المنصة -->
+    <div class="text-center mb-8 floating">
+      <a href="index.html" class="inline-flex items-center justify-center gap-3 group">
+        <div class="w-16 h-16 bg-white dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
+          <i class="fas fa-graduation-cap text-indigo-600 text-3xl"></i>
+        </div>
+        <span class="text-3xl font-extrabold text-white drop-shadow-lg">كورسات<span class="text-yellow-300">+</span></span>
+      </a>
+      <p class="text-white/90 mt-3 text-sm">ابدأ رحلة التعلم معنا</p>
+    </div>
+
+    <!-- بطاقة تسجيل الدخول -->
+    <div class="glass-card rounded-3xl p-8 shadow-2xl">
+      
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white text-center mb-2">
+        مرحباً بك مجدداً! 👋
+      </h1>
+      <p class="text-gray-500 dark:text-gray-400 text-center mb-8">
+        سجل دخولك للمتابعة
+      </p>
+
+      <!-- نموذج تسجيل الدخول -->
+      <form id="login-form" class="space-y-5" novalidate>
+        
+        <!-- البريد الإلكتروني -->
+        <div>
+          <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            البريد الإلكتروني
+          </label>
+          <div class="relative">
+            <i class="fas fa-envelope input-icon"></i>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="example@domain.com"
+              required
+              class="w-full pr-12 pl-4 py-3.5 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition-all duration-300 text-sm">
+          </div>
+          <p id="email-error" class="hidden text-red-500 text-xs mt-1.5"></p>
+        </div>
+
+        <!-- كلمة المرور -->
+        <div>
+          <label for="password" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            كلمة المرور
+          </label>
+          <div class="relative">
+            <i class="fas fa-lock input-icon"></i>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              required
+              class="w-full pr-12 pl-4 py-3.5 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition-all duration-300 text-sm">
+            <button
+              type="button"
+              id="toggle-password"
+              class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+              <i id="password-icon" class="fas fa-eye text-sm"></i>
+            </button>
+          </div>
+          <p id="password-error" class="hidden text-red-500 text-xs mt-1.5"></p>
+        </div>
+
+        <!-- تذكرني ونسيت كلمة المرور -->
+        <div class="flex items-center justify-between">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="remember" class="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 focus:ring-2 cursor-pointer">
+            <span class="text-sm text-gray-600 dark:text-gray-400">تذكرني</span>
+          </label>
+          <a href="#" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
+            نسيت كلمة المرور؟
+          </a>
+        </div>
+
+        <!-- زر تسجيل الدخول -->
+        <button
+          type="submit"
+          class="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold text-base hover:bg-indigo-700 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+          <i class="fas fa-sign-in-alt ml-2"></i>
+          تسجيل الدخول
+        </button>
+
+      </form>
+
+      <!-- رابط التسجيل -->
+      <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">
+        ليس لديك حساب؟ 
+        <a href="#" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
+          سجل الآن
+        </a>
+      </p>
+
+    </div>
+
+    <!-- رابط العودة للرئيسية -->
+    <div class="text-center mt-6">
+      <a href="index.html" class="inline-flex items-center gap-2 text-white/90 hover:text-white text-sm font-semibold transition-colors">
+        <i class="fas fa-arrow-right"></i>
+        العودة للصفحة الرئيسية
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/custom-cursor-final.js"></script>
+  <script>
+    // تهيئة Custom Cursor
+    document.addEventListener('DOMContentLoaded', () => {
+      initCustomCursor();
+    });
+    
+    // تطبيق الوضع الليلي
+    const isDark = localStorage.getItem('darkMode') === 'true';
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    }
+
+    // إظهار/إخفاء كلمة المرور
+    document.getElementById('toggle-password').addEventListener('click', () => {
+      const passwordInput = document.getElementById('password');
+      const icon = document.getElementById('password-icon');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+
+    // معالجة نموذج تسجيل الدخول
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // الحصول على القيم
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const remember = document.getElementById('remember').checked;
+      
+      // إخفاء الأخطاء السابقة
+      document.getElementById('email-error').classList.add('hidden');
+      document.getElementById('password-error').classList.add('hidden');
+      document.getElementById('email').classList.remove('border-red-500');
+      document.getElementById('password').classList.remove('border-red-500');
+      
+      // التحقق من البريد الإلكتروني
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let hasError = false;
+      
+      if (!email) {
+        showError('email', 'يرجى إدخال البريد الإلكتروني');
+        hasError = true;
+      } else if (!emailRegex.test(email)) {
+        showError('email', 'يرجى إدخال بريد إلكتروني صحيح');
+        hasError = true;
+      }
+      
+      // التحقق من كلمة المرور
+      if (!password) {
+        showError('password', 'يرجى إدخال كلمة المرور');
+        hasError = true;
+      } else if (password.length < 6) {
+        showError('password', 'كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+        hasError = true;
+      }
+      
+      if (hasError) return;
+      
+      // حفظ بيانات المستخدم في LocalStorage
+      const user = {
+        email: email,
+        name: email.split('@')[0],
+        loginDate: new Date().toISOString(),
+        remember: remember
+      };
+      
+      localStorage.setItem('user', JSON.stringify(user));
+      
+      // عرض رسالة نجاح
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.innerHTML = '<i class="fas fa-check-circle ml-2"></i> تم تسجيل الدخول!';
+      btn.classList.add('bg-green-600');
+      btn.classList.remove('bg-indigo-600');
+      
+      // الانتقال للوحة التحكم بعد ثانية
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 1000);
+    });
+    
+    // وظيفة عرض الخطأ
+    function showError(field, message) {
+      const errorEl = document.getElementById(`${field}-error`);
+      const inputEl = document.getElementById(field);
+      
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+      inputEl.classList.add('border-red-500', 'ring-1', 'ring-red-500');
+      inputEl.focus();
+    }
+    
+    // إزالة الخطأ عند الكتابة
+    ['email', 'password'].forEach(field => {
+      document.getElementById(field).addEventListener('input', () => {
+        document.getElementById(`${field}-error`).classList.add('hidden');
+        document.getElementById(field).classList.remove('border-red-500', 'ring-1', 'ring-red-500');
+      });
+    });
+  </script>
+</body>
+</html>

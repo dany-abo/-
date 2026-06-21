@@ -98,6 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     animateDashboardStagger();
 
+  } else if (page === "course-details") {
+
+    initCourseDetailsPage();
+
   }
 
 });
@@ -219,88 +223,11 @@ function initPageTransition() {
 
 
 /**
-
  * Custom Cursor — دائرة صغيرة تتبع الماوس وتكبر على الأزرار والروابط
-
  * يعمل فقط على أجهزة سطح المكتب (pointer: fine)
-
+ * (يتم تحميل الدالة من custom-cursor-final.js)
  */
-
-function initCustomCursor() {
-
-  if (prefersReducedMotion() || !window.matchMedia("(pointer: fine)").matches) return;
-
-
-
-  const HOVER_SELECTOR =
-
-    "a, button, input, textarea, select, label, [role='button'], [data-enroll-id]";
-
-
-
-  const cursor = document.createElement("div");
-
-  cursor.id = "custom-cursor";
-
-  cursor.setAttribute("aria-hidden", "true");
-
-  document.body.appendChild(cursor);
-
-  document.body.classList.add("custom-cursor-active");
-
-
-
-  let mouseX = 0;
-
-  let mouseY = 0;
-
-  let cursorX = 0;
-
-  let cursorY = 0;
-
-
-
-  document.addEventListener("mousemove", (e) => {
-
-    mouseX = e.clientX;
-
-    mouseY = e.clientY;
-
-    cursor.classList.add("is-visible");
-
-    cursor.classList.toggle("is-hover", !!e.target.closest(HOVER_SELECTOR));
-
-  });
-
-
-
-  document.addEventListener("mouseleave", () => {
-
-    cursor.classList.remove("is-visible", "is-hover");
-
-  });
-
-
-
-  function followMouse() {
-
-    cursorX += (mouseX - cursorX) * 0.18;
-
-    cursorY += (mouseY - cursorY) * 0.18;
-
-    cursor.style.left = `${cursorX}px`;
-
-    cursor.style.top = `${cursorY}px`;
-
-    requestAnimationFrame(followMouse);
-
-  }
-
-
-
-  followMouse();
-
-}
+// تم نقل دالة initCustomCursor إلى custom-cursor-final.js لتجنب التكرار
 
 
 
@@ -2287,3 +2214,234 @@ function showToast(message, type = "success") {
 }
 
 
+
+
+/**
+ * تهيئة صفحة تفاصيل الكورس
+ */
+function initCourseDetailsPage() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const courseId = parseInt(urlParams.get('id'));
+  
+  // إذا لم يتم تحديد ID، عرض قائمة بجميع الكورسات
+  if (!courseId) {
+    showAllCoursesForSelection();
+    return;
+  }
+  
+  const course = coursesData.find(c => c.id === courseId);
+  
+  if (!course) {
+    showAllCoursesForSelection();
+    return;
+  }
+  
+  // إخفاء قائمة الكورسات وعرض التفاصيل
+  document.getElementById('courses-list-section').classList.add('hidden');
+  document.getElementById('course-details-section').classList.remove('hidden');
+  
+  // تحديث عنوان الصفحة
+  document.title = `${course.title} - منصة كورسات أونلاين`;
+  
+  // تحديث بيانات الكورس
+  document.getElementById('course-title').textContent = course.title;
+  document.getElementById('course-category').textContent = course.category;
+  document.getElementById('course-image').src = course.image;
+  document.getElementById('course-price').textContent = course.price;
+  document.getElementById('course-rating').textContent = course.rating;
+  document.getElementById('instructor-name').textContent = course.instructor;
+  
+  // تحديث النجوم
+  const stars = generateStars(course.rating);
+  document.getElementById('course-stars').innerHTML = stars;
+  
+  // التحقق من التسجيل
+  if (isEnrolled(courseId)) {
+    const btn = document.getElementById('enroll-btn');
+    if (btn) {
+      btn.textContent = 'مسجل ✓';
+      btn.disabled = true;
+      btn.classList.add('bg-green-600', 'cursor-not-allowed', 'opacity-80');
+      btn.classList.remove('hover:bg-indigo-700', 'hover:-translate-y-1');
+    }
+  }
+  
+  // تحديث صورة المدرب
+  const instructorImg = document.getElementById('instructor-avatar');
+  if (instructorImg) {
+    const imgNum = courseId % 50 + 1;
+    instructorImg.src = `https://i.pravatar.cc/150?img=${imgNum}`;
+  }
+}
+
+/**
+ * عرض جميع الكورسات للاختيار منها
+ */
+function showAllCoursesForSelection() {
+  // إخفاء قسم التفاصيل وعرض قائمة الكورسات
+  document.getElementById('course-details-section').classList.add('hidden');
+  document.getElementById('courses-list-section').classList.remove('hidden');
+  
+  const container = document.getElementById('all-courses-grid');
+  if (!container) return;
+  
+  // إنشاء بطاقات الكورسات مع روابط قابلة للنقر
+  container.innerHTML = coursesData
+    .map((course, index) => {
+      const stars = generateStars(course.rating);
+      const aosAnim = getCardAosAnimation(index);
+      const delay = (index % 3) * 100;
+      
+      return `
+        <article
+          class="course-card group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700 will-change-transform cursor-pointer"
+          data-aos="${aosAnim}" data-aos-delay="${delay}"
+          onclick="window.location.href='course-details.html?id=${course.id}'">
+          <div class="course-image-wrapper relative overflow-hidden">
+            <img
+              src="${course.image}"
+              alt="${course.title}"
+              class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500 will-change-transform"
+              loading="lazy">
+            <div class="shimmer-overlay" aria-hidden="true"></div>
+            <span class="absolute top-3 right-3 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+              ${course.category}
+            </span>
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
+              ${course.title}
+            </h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">
+              <i class="fas fa-user-tie ml-1"></i> ${course.instructor}
+            </p>
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-1 text-yellow-400 text-sm">
+                ${stars}
+                <span class="text-gray-600 dark:text-gray-400 mr-1">${course.rating}</span>
+              </div>
+              <span class="text-indigo-600 dark:text-indigo-400 font-bold text-lg">
+                ${course.price} ر.س
+              </span>
+            </div>
+            <div class="text-center text-indigo-600 dark:text-indigo-400 font-semibold text-sm mt-4">
+              <i class="fas fa-eye ml-1"></i> اضغط لعرض التفاصيل
+            </div>
+          </div>
+        </article>
+      `;
+    })
+    .join('');
+  
+  if (typeof AOS !== 'undefined') AOS.refresh();
+}
+
+/**
+ * تحميل تفاصيل كورس معين
+ */
+function loadCourseDetails(courseId) {
+  const course = coursesData.find(c => c.id === courseId);
+  
+  if (!course) {
+    showAllCoursesForSelection();
+    return;
+  }
+  
+  // إظهار قسم التفاصيل وإخفاء القائمة
+  document.getElementById('courses-list-section').classList.add('hidden');
+  document.getElementById('course-details-section').classList.remove('hidden');
+  
+  // تحديث عنوان الصفحة
+  document.title = `${course.title} - منصة كورسات أونلاين`;
+  
+  // تحديث بيانات الكورس
+  document.getElementById('course-title').textContent = course.title;
+  document.getElementById('course-category').textContent = course.category;
+  document.getElementById('course-image').src = course.image;
+  document.getElementById('course-price').textContent = course.price;
+  document.getElementById('course-rating').textContent = course.rating;
+  document.getElementById('instructor-name').textContent = course.instructor;
+  
+  // تحديث النجوم
+  const stars = generateStars(course.rating);
+  document.getElementById('course-stars').innerHTML = stars;
+  
+  // التحقق من التسجيل
+  const btn = document.getElementById('enroll-btn');
+  if (isEnrolled(courseId)) {
+    if (btn) {
+      btn.textContent = 'مسجل ✓';
+      btn.disabled = true;
+      btn.classList.add('bg-green-600', 'cursor-not-allowed', 'opacity-80');
+      btn.classList.remove('hover:bg-indigo-700', 'hover:-translate-y-1');
+    }
+  } else {
+    // إعادة تعيين الزر للحالة الطبيعية
+    if (btn) {
+      btn.textContent = 'اشترك الآن';
+      btn.disabled = false;
+      btn.classList.remove('bg-green-600', 'cursor-not-allowed', 'opacity-80');
+      btn.classList.add('hover:bg-indigo-700', 'hover:-translate-y-1');
+      btn.className = 'btn-ripple w-full py-4 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 hover:-translate-y-1 hover:shadow-xl transition-all duration-300';
+      // تحديث onclick
+      btn.setAttribute('onclick', 'enrollFromDetails()');
+    }
+  }
+  
+  // تحديث صورة المدرب
+  const instructorImg = document.getElementById('instructor-avatar');
+  if (instructorImg) {
+    const imgNum = courseId % 50 + 1;
+    instructorImg.src = `https://i.pravatar.cc/150?img=${imgNum}`;
+  }
+  
+  // التمرير للأعلى
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/**
+ * وظيفة التسجيل في الكورس من صفحة التفاصيل
+ */
+function enrollFromDetails() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const courseId = parseInt(urlParams.get('id')) || 1;
+  enrollCourse(courseId);
+  
+  // تحديث زر الاشتراك
+  const btn = document.getElementById('enroll-btn');
+  if (btn) {
+    btn.textContent = 'مسجل ✓';
+    btn.disabled = true;
+    btn.classList.add('bg-green-600', 'cursor-not-allowed', 'opacity-80');
+    btn.classList.remove('hover:bg-indigo-700', 'hover:-translate-y-1');
+  }
+}
+
+/**
+ * وظيفة فتح وإغلاق الأكورديون
+ * @param {number} id - معرف القسم
+ */
+function toggleAccordion(id) {
+  const content = document.getElementById(`content-${id}`);
+  const icon = document.getElementById(`icon-${id}`);
+  
+  if (!content || !icon) return;
+  
+  if (content.classList.contains('open')) {
+    content.classList.remove('open');
+    icon.classList.remove('fa-chevron-up');
+    icon.classList.add('fa-chevron-down');
+  } else {
+    // إغلاق جميع الأكورديونات الأخرى
+    document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('open'));
+    document.querySelectorAll('[id^="icon-"]').forEach(i => {
+      i.classList.remove('fa-chevron-up');
+      i.classList.add('fa-chevron-down');
+    });
+    
+    // فتح المحدد
+    content.classList.add('open');
+    icon.classList.remove('fa-chevron-down');
+    icon.classList.add('fa-chevron-up');
+  }
+}
