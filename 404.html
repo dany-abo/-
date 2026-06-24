@@ -176,8 +176,6 @@
     }
     
     /* Custom Cursor */
-    * { cursor: none !important; }
-    
     #custom-cursor {
       position: fixed;
       top: 0;
@@ -204,15 +202,18 @@
       border: 2px solid white;
     }
     
+    /* إخفاء المؤشر الافتراضي فقط على الديسكتوب */
+    @media (min-width: 769px) and (pointer: fine) {
+      * { cursor: none !important; }
+    }
+    
     @media (max-width: 768px) {
       #custom-cursor { display: none !important; }
-      * { cursor: auto !important; }
       .glitch { font-size: 5rem; }
     }
     
     @media (pointer: coarse) {
       #custom-cursor { display: none !important; }
-      * { cursor: auto !important; }
     }
     
     @media (prefers-reduced-motion: reduce) {

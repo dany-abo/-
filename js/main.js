@@ -963,6 +963,8 @@ function initMobileMenu() {
 
       mobileMenu.classList.add("flex");
 
+      document.body.classList.add("mobile-menu-open");
+
     });
 
   }
@@ -973,9 +975,7 @@ function initMobileMenu() {
 
     closeBtn.addEventListener("click", () => {
 
-      mobileMenu.classList.add("hidden");
-
-      mobileMenu.classList.remove("flex");
+      closeMobileMenu(mobileMenu);
 
     });
 
@@ -983,17 +983,67 @@ function initMobileMenu() {
 
 
 
+  // إغلاق القائمة عند النقر على الروابط
+
   mobileMenu?.querySelectorAll("a").forEach((link) => {
 
     link.addEventListener("click", () => {
 
-      mobileMenu.classList.add("hidden");
-
-      mobileMenu.classList.remove("flex");
+      closeMobileMenu(mobileMenu);
 
     });
 
   });
+
+
+
+  // إغلاق القائمة عند النقر خارجها
+
+  mobileMenu?.addEventListener("click", (e) => {
+
+    if (e.target === mobileMenu) {
+
+      closeMobileMenu(mobileMenu);
+
+    }
+
+  });
+
+
+
+  // إغلاق القائمة عند الضغط على زر Escape
+
+  document.addEventListener("keydown", (e) => {
+
+    if (e.key === "Escape" && !mobileMenu?.classList.contains("hidden")) {
+
+      closeMobileMenu(mobileMenu);
+
+    }
+
+  });
+
+}
+
+
+
+/**
+
+ * إغلاق القائمة المتنقلة وإعادة التمرير
+
+ * @param {HTMLElement} mobileMenu - عنصر القائمة المتنقلة
+
+ */
+
+function closeMobileMenu(mobileMenu) {
+
+  if (!mobileMenu) return;
+
+  mobileMenu.classList.add("hidden");
+
+  mobileMenu.classList.remove("flex");
+
+  document.body.classList.remove("mobile-menu-open");
 
 }
 

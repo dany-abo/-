@@ -1,8 +1,4 @@
 /* ===== Custom Cursor - دائرة مخصصة تتبع الماوس ===== */
-/* إخفاء المؤشر الافتراضي تماماً */
-* { 
-  cursor: none !important; 
-}
 
 /* الدائرة الخارجية المخصصة */
 #custom-cursor {
@@ -68,23 +64,24 @@
   opacity: 1; 
 }
 
-/* إخفاء على الموبايل والأجهزة اللوحية */
+/* إخفاء المؤشر الافتراضي فقط على الديسكتوب */
+@media (min-width: 769px) and (pointer: fine) {
+  * { 
+    cursor: none !important; 
+  }
+}
+
+/* إخفاء المؤشر المخصص على الموبايل وإظهار المؤشر العادي */
 @media (max-width: 768px) {
   #custom-cursor, #custom-cursor-dot { 
     display: none !important; 
   }
-  * { 
-    cursor: auto !important; 
-  }
 }
 
-/* إخفاء على شاشات اللمس */
+/* إخفاء المؤشر المخصص على شاشات اللمس وإظهار المؤشر العادي */
 @media (pointer: coarse) {
   #custom-cursor, #custom-cursor-dot { 
     display: none !important; 
-  }
-  * { 
-    cursor: auto !important; 
   }
 }
 

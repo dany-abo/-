@@ -34,6 +34,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
+    /* ===== Box Sizing Reset ===== */
+    *, *::before, *::after { box-sizing: border-box; }
+    
     html { scroll-behavior: smooth; }
     body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
     .login-bg {
@@ -78,6 +81,29 @@
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-20px); }
     }
+    /* Mobile navbar fix (if navbar exists) */
+    @media (max-width: 640px) {
+      #main-navbar {
+        left: 0 !important;
+        right: 0 !important;
+        width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        margin-right: -80px !important;
+        margin-left: 0 !important;
+        transform: none !important;
+      }
+      #main-navbar.navbar-scrolled {
+        left: 0 !important;
+        right: 0 !important;
+        width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: none !important;
+      }
+    }
+    
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -86,9 +112,7 @@
       }
     }
     
-    /* ===== Custom Cursor - إخفاء المؤشر الافتراضي تماماً ===== */
-    * { cursor: none !important; }
-    
+    /* ===== Custom Cursor - دائرة تتبع الماوس ===== */
     /* الدائرة الخارجية المخصصة */
     #custom-cursor {
       position: fixed;
@@ -136,16 +160,19 @@
     .dark #custom-cursor-dot { background: #818cf8; }
     #custom-cursor-dot.is-visible { opacity: 1; }
     
-    /* إخفاء على الموبايل */
-    @media (max-width: 768px) {
-      #custom-cursor, #custom-cursor-dot { display: none !important; }
-      * { cursor: auto !important; }
+    /* إخفاء المؤشر الافتراضي فقط على الديسكتوب */
+    @media (min-width: 769px) and (pointer: fine) {
+      * { cursor: none !important; }
     }
     
-    /* إخفاء على شاشات اللمس */
+    /* إخفاء المؤشر المخصص على الموبايل وإظهار المؤشر العادي */
+    @media (max-width: 768px) {
+      #custom-cursor, #custom-cursor-dot { display: none !important; }
+    }
+    
+    /* إخفاء المؤشر المخصص على شاشات اللمس وإظهار المؤشر العادي */
     @media (pointer: coarse) {
       #custom-cursor, #custom-cursor-dot { display: none !important; }
-      * { cursor: auto !important; }
     }
   </style>
 </head>
